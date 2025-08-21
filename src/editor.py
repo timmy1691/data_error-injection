@@ -1,10 +1,8 @@
 from methods import *
 from generators import *
 
-
-
-
 class editor:
+    
     def __init__(self, datasets):
         self.originalDataset = datasets
 
@@ -13,5 +11,5 @@ class editor:
         Add error
         """
         pass
-
     
+    def getPreviousData(self):
