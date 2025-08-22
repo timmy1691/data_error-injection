@@ -34,7 +34,12 @@ class editor:
             self.errorType.add(errorType.lower()+"_col")
             self.colSpellingError(dataframe, ratio, error_rate)
 
-        elif errorType.lower() == "fenerational":
+        elif errorType.lower() == "characters" and inst_level:
+            pass
+        elif errorType.lower() == "characters" and not inst_level:
+            pass
+
+        elif errorType.lower() == "generational":
             pass
         else:
             pass
@@ -43,7 +48,7 @@ class editor:
                 
     def addSpellingError(self, dataframe, ratio, error_rate):
         from src.generators.key_errors import KEY_NEIGHBORS as kn
-        self.newDataset = dataframe.copy()
+        newDataset = dataframe.copy()
 
         columns = list(dataframe.columns)
         num_dpoints, _ = dataframe.shape
@@ -76,12 +81,13 @@ class editor:
                                 new_vals.append(val[i])
                             indices.append(i)
                     new_string = spell.string_replacer(val, indices, new_vals)
-                self.newDataset = self.newDataset.iloc[index][col] = new_string
+                newDataset = self.newDataset.iloc[index][col] = new_string
+            self.newDataset = newDataset.copy()
 
         return self.newDataset
     
     def colSpellingError(self, dataframe, ratio, error):
-        self.newDataset = dataframe.copy()
+        newDataset = dataframe.copy()
 
         from src.generators.key_errors import KEY_NEIGHBORS as kn
         cols = list(dataframe.columns)
@@ -104,8 +110,28 @@ class editor:
 
             mapper[col_name] = new_col
 
-        self.newDataset = self.newDataset.rename(columns = mapper)
+        self.newDataset = newDataset.rename(columns = mapper).copy()
         return self.newDataset
+    
+    def addSimilarUniChars(self, dataframe, ratio, error_rate):
+        """
+        Add error
+        """
+
+        from src.generators.key_errors import unicode_mindfuck as um
+        newDataset = dataframe.copy()
+
+        col_names = list(dataframe.columns)
+
+        for col in col_names:
+            pass
+
+
+
+
+    def addRandomUniChars(self, dataframe):
+        pass
+
     
     def getPreviousData(self):
         return self.originalDataset
