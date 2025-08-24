@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 import math
 
+from src.generators.key_errors import KEY_NEIGHBORS as kn
+from src.generators.key_errors import unicode_mindfuck as um
+
 class editor:
     
     def __init__(self):
@@ -17,7 +20,7 @@ class editor:
             self.originalDataset = dataframe.copy()
 
 
-    def addError(self, dataframe, errorType, inst_level = True, ratio=0.2, error_rate=0.1):
+    def addError(self, dataframe, errorType, legend, inst_level = True, ratio=0.2, error_rate=0.1):
         """
         Add error
         error_type  :    type of error
@@ -32,7 +35,7 @@ class editor:
         
         elif errorType.lower() == "spelling" and not inst_level:
             self.errorType.add(errorType.lower()+"_col")
-            self.colSpellingError(dataframe, ratio, error_rate)
+            self.colSpellingError(dataframe, ratio, error_rate, legend=legend)
 
         elif errorType.lower() == "characters" and inst_level:
             pass
@@ -46,8 +49,16 @@ class editor:
 
         return self.newDataset
                 
-    def addSpellingError(self, dataframe, ratio, error_rate):
-        from src.generators.key_errors import KEY_NEIGHBORS as kn
+
+    def addSpellingError(self, dataframe, ratio, error_rate, legend):
+
+
+        if legend == "keyError":
+            from src.generators.key_errors import KEY_NEIGHBORS as legend
+
+        elif legend == "unicode":
+            from src.generators.key_errors import unicode_mindfuck as legend
+
         newDataset = dataframe.copy()
 
         columns = list(dataframe.columns)
@@ -76,7 +87,7 @@ class editor:
                     for i, randomRate in enumerate(randomRate):
                         if randomRate < error_rate:
                             try:
-                                new_vals.append(random.choice(kn[val[i].lower()]))
+                                new_vals.append(random.choice(legend[val[i].lower()]))
                             except KeyError:
                                 new_vals.append(val[i])
                             indices.append(i)
@@ -86,10 +97,16 @@ class editor:
 
         return self.newDataset
     
-    def colSpellingError(self, dataframe, ratio, error):
+    def colSpellingError(self, dataframe, ratio, error, legend):
+
+        
+        if legend == "keyError":
+            from src.generators.key_errors import KEY_NEIGHBORS as legend
+
+        elif legend == "unicode":
+            from src.generators.key_errors import unicode_mindfuck as legend
         newDataset = dataframe.copy()
 
-        from src.generators.key_errors import KEY_NEIGHBORS as kn
         cols = list(dataframe.columns)
         num_cols = len(cols)
         sample_indices = np.random.choice(range(num_cols), size=math.ceil(num_cols*ratio))
@@ -102,7 +119,7 @@ class editor:
             change_vals = []
             for char_id in sorted(errorIndex):
                     change_indices.append(char_id)
-                    change_vals.append(random.choice(kn[col_name[char_id].lower()]))
+                    change_vals.append(random.choice(legend[col_name[char_id].lower()]))
             
             print("old col : ", col_name)
             new_col = spell.string_replacer(col_name, change_indices, change_vals)
@@ -113,23 +130,9 @@ class editor:
         self.newDataset = newDataset.rename(columns = mapper).copy()
         return self.newDataset
     
-    def addSimilarUniChars(self, dataframe, ratio, error_rate):
-        """
-        Add error
-        """
-
-        from src.generators.key_errors import unicode_mindfuck as um
-        newDataset = dataframe.copy()
-
-        col_names = list(dataframe.columns)
-
-        for col in col_names:
-            pass
 
 
-
-
-    def addRandomUniChars(self, dataframe):
+    def addRandomUniChars(self, dataframe, location="end"):
         pass
 
     
