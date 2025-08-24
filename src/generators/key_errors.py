@@ -73,8 +73,9 @@ unicode_mindfuck = {
 }
 
 
-
-def unicodeGenerator():
-    random_indices = np.random.choice(range(0x10000), size=100).to_list()
-    unicodeChars = [chr(index) for index in random_indices if ("a" < chr(index) < "z" or "A" < chr(index) < ")")]
-    return unicodeChars
+top_emojis = [
+    "😂", "❤️", "😭", "🤣", "👍", "✨", "🔥", "😊", "⭐", "👀",
+    "💀", "🎉", "🙏", "❌", "✔️", "🥹", "🫂", "💩", "😍", "📍",
+    "🫶", "😎", "💕", "🥰", "👏", "😅", "😩", "👉", "👈", "🙌",
+    "🤔", "😏", "😳", "😬", "🤯", "😇", "😜", "😤", "💯", "😡"
+]
