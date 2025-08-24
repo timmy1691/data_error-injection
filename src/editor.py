@@ -130,10 +130,20 @@ class editor:
         self.newDataset = newDataset.rename(columns = mapper).copy()
         return self.newDataset
     
+    def commit_file(self, filePath):
+        file_type = filePath.split(".")[-1]
+        if file_type == "csv":
+            self.newDataset.to_csv(filePath)
+        elif file_type == "parquet":
+            self.newDataset.to_parquet(filePath)
+        elif file_type == "json":
+            self.newDataset.to_json(filePath)
+        else:
+            raise ValueError("We do not handle this file type")
 
 
-    def addRandomUniChars(self, dataframe, location="end"):
-        pass
+    def addRandomUniChars(self, dataframe=None, location="end"):
+        
 
     
     def getPreviousData(self):
