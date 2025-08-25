@@ -20,4 +20,4 @@ def col_synonyms_slm(input_text):
     """
     Using OLLAMA
     """
-    pass
+    raise Exception("Not implemented")

@@ -1,4 +1,4 @@
-
+import numpy as np
 
 def string_replacer(string, indices, new_values):
     new_string = "" 
@@ -16,7 +16,7 @@ def string_replacer(string, indices, new_values):
 
 def insert_start(dataframe, values, indices):
     newDataframe = dataframe.copy()
-    for index in indices:
+    for i in range(len(indices)):
         old_val = dataframe[indices[i]]
         new_val = values[i] + old_val
         newDataframe[indices[i]] = new_val
