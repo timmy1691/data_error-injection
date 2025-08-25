@@ -1,6 +1,6 @@
-/datasets/datasets_CAN
-/datasets/datasets_UK
-/datasets/datasets_USA
-/datasets/opendata_join_ground_truth.csv
-/datasets/opendata_join_query.csv
+/local_datasets/datasets_CAN
+/local_datasets/datasets_UK
+/local_datasets/datasets_USA
+/local_datasets/opendata_join_ground_truth.csv
+/local_datasets/opendata_join_query.csv
 making datalake.ipynb
