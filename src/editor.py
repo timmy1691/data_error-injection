@@ -99,7 +99,6 @@ class editor:
     
     def colSpellingError(self, dataframe, ratio, error, legend):
 
-        
         if legend == "keyError":
             from src.generators.key_errors import KEY_NEIGHBORS as legend
 
@@ -142,8 +141,18 @@ class editor:
             raise ValueError("We do not handle this file type")
 
 
-    def addRandomUniChars(self, dataframe=None, location="end"):
-        
+    def addRandomUniChars(self, dataframe, location="end"):
+        newdataframe = dataframe.copy()
+        columns = list(dataframe.columns)
+
+        num_dp, _ = newdataframe.shape
+           
+        for col in columns:
+            temp_data = dataframe[col]
+            temp_data = temp_data.dropna()
+            is_string = temp_data.apply(lambda x: isinstance(x, str))
+            if is_string.all():
+                
 
     
     def getPreviousData(self):
